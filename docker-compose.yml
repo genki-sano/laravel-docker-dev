@@ -1,32 +1,35 @@
 services:
-  nginx:
-    build:
-      context: ./docker/nginx
-    depends_on:
-      - app
-    ports:
-      - 80:80
-    volumes:
-      - ./:/src
+    nginx:
+        build:
+            context: ./docker/nginx
+        depends_on:
+            - app
+        ports:
+            - 80:80
+        volumes:
+            - ./:/src
 
-  app:
-    build:
-      context: ./docker/php
-    depends_on:
-      - mysql
-    volumes:
-      - ./:/src
-      - /src/node_modules
-      - /src/vendor
-      - ./docker/php/php.ini:/usr/local/etc/php/php.ini
+    app:
+        build:
+            context: ./docker/php
+        depends_on:
+            - mysql
+        volumes:
+            - ./:/src
+            - ./docker/php/php.ini:/usr/local/etc/php/php.ini
 
-  mysql:
-    image: mysql:8.0.37
-    command: --max_allowed_packet=32505856
-    volumes:
-      - ./docker/mysql:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=l11dev
-    ports:
-      - 3306:3306
+    mysql:
+        image: mysql:8.0.37
+        user: "mysql"
+        command: --max_allowed_packet=32505856
+        container_name: "mysql"
+        volumes:
+            - mysql_data:/var/lib/mysql
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_DATABASE=developer
+        ports:
+            - 3306:3306
+
+volumes:
+    mysql_data:
