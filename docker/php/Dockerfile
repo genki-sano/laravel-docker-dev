@@ -27,6 +27,4 @@ RUN node --version
 RUN yarn --version
 ENV PATH="/usr/local/bin:${PATH}"
 
-WORKDIR /src
-ADD . /src/storage
-RUN chown -R www-data:www-data /src/storage
+WORKDIR /var/www/html

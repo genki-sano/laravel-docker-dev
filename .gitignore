@@ -1,0 +1,9 @@
+# PhpStorm
+.idea
+
+# Docker Compose
+.env
+.env.local
+
+# あくまで開発環境なので
+/src
